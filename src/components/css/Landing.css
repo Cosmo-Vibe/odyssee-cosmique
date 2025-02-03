@@ -1,0 +1,54 @@
+:root {
+  --color-primary: white;
+  --color-secondary: grey;
+}
+
+.landing-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.main-text {
+  font-size: 2.25rem; /* text-4xl */
+  font-size: 3.75rem; /* md:text-6xl */
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: all 0.5s;
+  z-index: 10;
+}
+.main-text:hover {
+  filter: brightness(1.25);
+  color: var(--color-primary);
+}
+
+.bottom-text {
+  position: absolute;
+  bottom: 2rem; /* bottom-8 */
+  color: var(--color-secondary);
+  font-size: 0.875rem; /* text-sm */
+  font-size: 1rem; /* md:text-base */
+  opacity: 0.7;
+  z-index: 10;
+  animation: flicker infinite 2s;
+}
+
+@keyframes flicker {
+  0% {
+    filter: brightness(0.8);
+  
+  }
+  50% {
+    filter: brightness(3.50);
+    color: var(--color-primary);
+  
+  }
+  100% {
+    filter: brightness(0.8);
+    color: var(--color-secondary)
+  }
+}

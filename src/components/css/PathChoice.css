@@ -1,0 +1,177 @@
+/* Container Layout */
+.path-choice-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: none;
+  opacity: 1;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  z-index: 2;
+}
+
+.carousel-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Carousel */
+.carousel {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  justify-content: center;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cards */
+.path-card {
+  /* Use fixed dimensions for consistent sizing */
+  width: clamp(250px, 30vw, 300px);
+  height: clamp(350px, 50vh, 400px);
+  background: linear-gradient(
+    to bottom,
+    rgba(234, 229, 229, 0.2) 0%,
+    rgba(50, 50, 50, 0.2) 100%
+  );
+  border: 1px solid transparent;
+  border-radius: 0 3rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure image and text do not overlap */
+  align-items: center;
+  scroll-snap-align: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: transform 300ms ease, background-color 300ms ease, border-color 300ms ease;
+  opacity: 1;
+}
+
+/* Adjust image layout: allocate ~75% height for image and keep it contained */
+.path-card img {
+  display: block;
+  width: 100%;
+  height: 75%;
+  object-fit: contain;
+  filter: brightness(0.9);
+  transition: filter 300ms ease;
+}
+
+/* Remove scaling for disabled cards so all images keep consistent size */
+.path-card.disabled img {
+  transform: none;
+}
+
+/* Ensure text is visible and positioned in the remaining area */
+.path-card h2 {
+  margin: 0;
+  padding: 0.5rem;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover effects remain unchanged */
+.path-card:hover:not(.disabled) {
+  transform: translateY(-10px) scale(1.02);
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.path-card:hover:not(.disabled) img {
+  filter: brightness(1);
+}
+
+/* Disabled state styling */
+.path-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(50%);
+}
+
+/* Card entrance animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Transition states */
+.path-choice-container.slide-in {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.path-choice-container.slide-in .path-card {
+  animation: slideUp 1.5s cubic-bezier(0.4, 0, 0.2, 1) 3s forwards;
+}
+
+.path-choice-container.slide-in .path-card:nth-child(1) { animation-delay: 0.2s; }
+.path-choice-container.slide-in .path-card:nth-child(2) { animation-delay: 0.3s; }
+.path-choice-container.slide-in .path-card:nth-child(3) { animation-delay: 0.4s; }
+
+.path-choice-container.slide-out {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.path-choice-container.slide-out-up {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.path-choice-container.slide-out-right {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.path-choice-container.slide-out-left {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.path-choice-container.slide-out-down {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.path-choice-container.slide-up {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.path-choice-container:not(.slide-up) {
+  transform: translateY(100%);
+}
+
+.path-choice-container.slide-down {
+  transform: translateY(100%);
+  opacity: 0;
+}
