@@ -1,8 +1,8 @@
 :root {
-  --nav-item-size: 3rem;
-  --nav-item-gap: 3.5rem;
+  --nav-item-size: 3.5rem;
+  --nav-item-gap: 4rem;
   --nav-left-position: 3rem;
-  --indicator-size: calc(var(--nav-item-size) + 0.5rem);
+  --indicator-size: calc(var(--nav-item-size) + 0.75rem);
   --bounce-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -15,7 +15,7 @@
   flex-direction: column;
   gap: var(--nav-item-gap);
   z-index: 50;
-  height: 80vh; /* Take more vertical space */
+  height: 80vh;
   justify-content: center;
 }
 
@@ -28,51 +28,54 @@
   justify-content: center;
   background: none;
   border: none;
-  padding: 0;
+  padding: 0.5rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.nav-indicator {
-  position: absolute;
-  width: var(--indicator-size);
-  height: var(--indicator-size);
-  left: -0.25rem;  /* Adjust to center with icons */
-  top: 0;
-  border: 2px solid white;
-  border-radius: 50%;
-  pointer-events: none;
-  transition: transform 0.6s var(--bounce-timing);
-  background: white;
-  z-index: 1;
-}
-
-.nav-indicator::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: calc(var(--indicator-size) - 4px);
-  height: calc(var(--indicator-size) - 4px);
-  transform: translate(-50%, -50%);
-  background: white;
-  border-radius: 50%;
-  transition: inherit;
+  transition: transform 0.3s ease;
+  z-index: 2;
 }
 
 .stage-icon {
-  position: relative;
   width: 75%;
   height: 75%;
   fill: white;
   transition: all 0.3s ease;
-  z-index: 2;
 }
 
 .nav-stage.active .stage-icon {
-  fill: black;
+  fill: #ff0000;
 }
 
 .nav-stage:hover:not(.active) .stage-icon {
   transform: scale(1.1);
+}
+
+.nav-indicator {
+  position: fixed;
+  width: var(--indicator-size);
+  height: var(--indicator-size);
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  transition: all 0.6s var(--bounce-timing);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stage-name-tooltip {
+  position: absolute;
+  left: calc(100% + 1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.nav-stage:hover .stage-name-tooltip {
+  opacity: 1;
 }

@@ -1,3 +1,4 @@
+import { useRef, useEffect, useCallback } from 'react';
 import '../css/NavBar.css';
 
 interface NavBarProps {
@@ -131,8 +132,39 @@ const stageNames = [
 ];
 
 const NavBar = ({ currentStage, onStageChange }: NavBarProps) => {
+  const navRef = useRef<HTMLDivElement>(null);
+  const indicatorRef = useRef<HTMLDivElement>(null);
+
+  const updateIndicatorPosition = useCallback(() => {
+    const nav = navRef.current;
+    const indicator = indicatorRef.current;
+    if (!nav || !indicator) return;
+
+    const buttons = Array.from(nav.querySelectorAll('.nav-stage'));
+    const activeButton = buttons[currentStage];
+    
+    if (activeButton) {
+      const navRect = nav.getBoundingClientRect();
+      const buttonRect = activeButton.getBoundingClientRect();
+      
+      const top = buttonRect.top - navRect.top;
+      
+      // Calculate center position
+      const centerY = top + (buttonRect.height - indicator.offsetHeight) / 2;
+      
+      indicator.style.setProperty('--indicator-top', `${centerY}px`);
+    }
+  }, [currentStage]);
+
+  useEffect(() => {
+    updateIndicatorPosition();
+    window.addEventListener('resize', updateIndicatorPosition);
+    return () => window.removeEventListener('resize', updateIndicatorPosition);
+  }, [currentStage, updateIndicatorPosition]);
+
   return (
-    <div className="nav-bar">
+    <div className="nav-bar" ref={navRef}>
+      <div className="nav-indicator" ref={indicatorRef} />
       {stageNames.map((name, index) => (
         <button
           key={index}
@@ -141,6 +173,7 @@ const NavBar = ({ currentStage, onStageChange }: NavBarProps) => {
           aria-label={name}
         >
           {stageIcons[name as keyof typeof stageIcons]}
+          <span className="stage-name-tooltip">{name}</span>
         </button>
       ))}
     </div>

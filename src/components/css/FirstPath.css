@@ -19,20 +19,24 @@
   z-index: 2;
 }
 
-.nav-arrow-container {
-  position: fixed;
-  top: 2rem;
-  left: 2rem;
-  z-index: 10;
+.nav-arrow {
+  position: relative;
+  margin: 2rem;
+  /* top: 0;
+  left: 0; */
+  z-index: 50;
 }
 
 .nav-arrow {
   cursor: pointer;
-  transition: fill 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
 
-.nav-arrow:hover rect,
-.nav-arrow:hover path {
+.nav-arrow > * {
+  transition: fill 0.3s ease;
+}
+
+.nav-arrow:hover > * {
   fill: white;
 }
 

@@ -15,7 +15,7 @@ const PathChoice: FC = () => {
     {
       id: 1,
       title: 'Naine Blanche',
-      image: '/img/Naineblanche.png', // Temporary placeholder
+      image: '/img/NaineBlanche.png', // Temporary placeholder
       available: true
     },
     {
